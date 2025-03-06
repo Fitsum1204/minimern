@@ -6,7 +6,7 @@ import AuthContext from "../context/AuthContext";
 const Admin = () => {
   const { user, logout } = useContext(AuthContext);
   const [tickets, setTickets] = useState([]);
-  const navigate = useNavigate(); /
+  const navigate = useNavigate(); 
 
   // Redirect non-admins
   useEffect(() => {
@@ -26,7 +26,7 @@ const Admin = () => {
         console.error("Error fetching tickets:", error);
       }
     };
-    if (user && user.role === "admin") fetchTickets(); 
+    if (user && user.role === "admin") {fetchTickets(); navigate("/admin"); } 
   }, [user]);
 
   const updateStatus = async (id, status) => {
