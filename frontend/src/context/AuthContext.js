@@ -30,7 +30,7 @@ export const AuthContextProvider = ({ children }) => {
     try {
         const config = {
             headers: {
-                'Content-Type':'application/json'
+               "x-auth-token": localStorage.getItem("token")
             }
           };
       const response = await axios.post("https://minimern-backend.onrender.com/api/auth/login", { email, password },config);
@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
       setToken(newToken);
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
-      throw error; // Let calling component handle the error
+      throw error; 
     }
   };
 
