@@ -13,7 +13,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 to-green-200 text-gray-800">
-      {/* Header */}
+     
       <header className="text-center mb-12">
         <h1 className="text-5xl font-bold mb-4">Welcome to TicketMaster</h1>
         <p className="text-xl max-w-2xl mx-auto">
@@ -21,7 +21,6 @@ const Home = () => {
         </p>
       </header>
 
-      {/* Buttons */}
       <div className="flex space-x-6">
         <button
           onClick={handleLogin}
@@ -37,7 +36,7 @@ const Home = () => {
         </button>
       </div>
 
-      {/* Optional Footer */}
+ 
       <footer className="mt-16 text-sm text-gray-600">
         <p>&copy; 2025 TicketMaster. </p>
       </footer>

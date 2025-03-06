@@ -10,11 +10,11 @@ const Login = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Fixed typo: preventdefault -> preventDefault
+    e.preventDefault(); /
     try {
       
       await login(email, password);
-      navigate("/dashboard"); // Redirect to dashboard instead of /login
+      navigate("/dashboard"); 
     } catch (error) {
       alert("Login failed. Please check your credentials.");
     }

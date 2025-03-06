@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
-  // Fetch tickets on component mount
+ 
   useEffect(() => {
     const fetchTickets = async () => {
       try {
@@ -58,7 +58,6 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* Ticket Creation Form */}
       <form onSubmit={createTicket} className="bg-white p-4 rounded-lg shadow-md mb-6 border border-gray-200">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">Create New Ticket</h2>
         <input
@@ -83,7 +82,6 @@ const Dashboard = () => {
         </button>
       </form>
 
-      {/* Tickets List */}
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">My Tickets</h2>
       <div className="space-y-4">
         {tickets.map((ticket) => (

@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect} from "react"; // Add useNavigate
+import { useContext, useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AuthContext from "../context/AuthContext";
@@ -6,12 +6,12 @@ import AuthContext from "../context/AuthContext";
 const Admin = () => {
   const { user, logout } = useContext(AuthContext);
   const [tickets, setTickets] = useState([]);
-  const navigate = useNavigate(); // Add this
+  const navigate = useNavigate(); /
 
   // Redirect non-admins
   useEffect(() => {
     if (user && user.role !== "admin") {
-      navigate("/dashboard"); // Redirect to user dashboard or login
+      navigate("/dashboard"); 
     }
   }, [user, navigate]);
 
@@ -26,7 +26,7 @@ const Admin = () => {
         console.error("Error fetching tickets:", error);
       }
     };
-    if (user && user.role === "admin") fetchTickets(); // Only fetch if admin
+    if (user && user.role === "admin") fetchTickets(); 
   }, [user]);
 
   const updateStatus = async (id, status) => {
@@ -37,14 +37,14 @@ const Admin = () => {
         { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
       setTickets(tickets.map((ticket) =>
-        ticket._id === id ? response.data : ticket // Use response.data
+        ticket._id === id ? response.data : ticket 
       ));
     } catch (error) {
       alert("Failed to update ticket status: " + (error.response?.data?.message || "Unknown error"));
     }
   };
 
-  if (!user || user.role !== "admin") return null; // Prevent rendering until redirect
+  if (!user || user.role !== "admin") return null; 
 
   
 
