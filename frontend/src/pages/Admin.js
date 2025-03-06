@@ -26,8 +26,10 @@ const Admin = () => {
         console.error("Error fetching tickets:", error);
       }
     };
-    if (user && user.role === "admin") {fetchTickets(); navigate("/admin"); } 
-  }, [user]);
+    if (user && user.role === "admin") {
+      fetchTickets()
+      navigate("/admin") } 
+  }, [user, navigate]);
 
   const updateStatus = async (id, status) => {
     try {
