@@ -22,14 +22,17 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error("MongoDB Connection Error:", err));
 
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+// Middleware
+app.use(express.json({extended: false}));
+app.use(cors({
+    origin: 'https://minimern-frontend.onrender.com' // Allow requests from frontend origin
+  }));
+app.get('/' ,cors(),(req,res) => res.send('API Running'));
 
 // Routes
-app.use('/api/user', user);
-app.use('/api/auth', auth);
-app.use('/api/ticket', ticket);
+app.use('/api/user',cors(), user);
+app.use('/api/auth',cors(), auth);
+app.use('/api/ticket',cors(), ticket);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
