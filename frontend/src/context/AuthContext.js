@@ -33,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
                 'Content-Type':'application/json'
             }
           };
-      const response = await axios.post("http://localhost:5000/api/auth/login", { email, password },config);
+      const response = await axios.post("https://minimern-frontend.onrender.com/api/auth/login", { email, password },config);
       const newToken = response.data.token;
       localStorage.setItem("token", newToken);
       setToken(newToken);
