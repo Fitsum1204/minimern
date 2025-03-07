@@ -12,10 +12,10 @@ const Admin = () => {
   // Redirect non-admins
   useEffect(() => {
     console.log("User object:", user);
-    console.log("User role: user.user?.role", user.user?.role);
+    console.log("User role:user.role !", user?.role);
     if (!user) return;
-    if (user.user?.role !== "admin") {
-      navigate("/dashboard");
+  if (user.role !== "admin") {  // ✅ Correct: Directly access user.role
+    navigate("/dashboard");
     }
   }, [user, navigate]);
 
