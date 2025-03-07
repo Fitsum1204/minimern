@@ -23,20 +23,7 @@ const Login = () => {
       alert("Login failed. Please check your credentials.");
     }
   };
-  /* const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const user = await login(email, password); // Get user data from login function
   
-      if (user.role === "admin") {
-        navigate("/admin"); // Redirect admin users
-      } else {
-        navigate("/dashboard"); // Redirect regular users
-      }
-    } catch (error) {
-      alert("Login failed. Please check your credentials.");
-    }
-  }; */
   
 
   return (
