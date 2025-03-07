@@ -5,7 +5,7 @@ import axios from "axios";
 // Create context
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
