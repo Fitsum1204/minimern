@@ -11,8 +11,9 @@ const Admin = () => {
 
   // Redirect non-admins
   useEffect(() => {
-    console.log("User data:", user.role);
-    if (user && user.role !== "admin") {
+    console.log("User object:", user);
+    console.log("User role:", user.user?.role);
+    if (user?.user?.role !== "admin") {
       navigate("/dashboard");
     }
   }, [user, navigate]);
