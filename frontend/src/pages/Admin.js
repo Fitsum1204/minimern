@@ -14,7 +14,7 @@ const Admin = () => {
     console.log("User object:", user);
     console.log("User role:user.role !", user?.role);
     if (!user) return;
-  if (user.role !== "admin") {  // ✅ Correct: Directly access user.role
+  if (user.role !== "admin") {  
     navigate("/dashboard");
     }
   }, [user, navigate]);

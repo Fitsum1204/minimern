@@ -12,7 +12,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     if (storedToken && !token) {
-      setToken(storedToken); // Set token if it exists in localStorage
+      setToken(storedToken); 
     }
     if (token) {
       try {
@@ -20,12 +20,12 @@ export const AuthContextProvider = ({ children }) => {
         setUser(decoded.user);
       } catch (error) {
         console.error("Invalid token:", error);
-        logout(); // Clear invalid token
+        logout(); 
       }
     }
   }, [token]);
 
-  // Login function
+
   const login = async (email, password) => {
     try {
       const response = await axios.post("https://minimern-backend.onrender.com/api/auth/login", { email, password });
@@ -34,7 +34,7 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("token", newToken);
       setToken(newToken);
   
-      // Decode the token immediately and update user state
+      
       const decoded = jwtDecode(newToken);
       console.log("a",decoded.user)
       setUser(decoded.user);
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
   
-  // Logout function
+
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);

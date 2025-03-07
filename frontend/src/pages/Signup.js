@@ -24,7 +24,7 @@ const SignupPage = () => {
       if (role === "admin") {
         navigate("/admin");
       } else {
-        navigate("/dashboard"); // Redirect to dashboard if the user is not an admin
+        navigate("/dashboard"); 
       }
     } catch (error) {
       alert("Signup failed. Please check your details and try again.");
