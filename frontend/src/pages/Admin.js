@@ -6,35 +6,32 @@ import AuthContext from "../context/AuthContext";
 const Admin = () => {
   const { user, logout } = useContext(AuthContext);
   const [tickets, setTickets] = useState([]);
-  const [loadingTicketId, setLoadingTicketId] = useState(null); // Track which ticket is loading
+  const [loadingTicketId, setLoadingTicketId] = useState(null);
   const navigate = useNavigate();
-
-  const token = localStorage.getItem("token");
 
   // Redirect non-admins
   useEffect(() => {
-    if (!user || user.role !== "admin") {
+    if (!user?.role || user.role !== "admin") {
       navigate("/dashboard");
     }
   }, [user, navigate]);
 
   // Fetch tickets
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const response = await axios.get(
-          "https://minimern-backend.onrender.com/api/ticket",
-          { headers: { "x-auth-token": token } }
-        );
-        setTickets(response.data);
-      } catch (error) {
-        console.error("Error fetching tickets:", error);
-      }
-    };
     if (user?.role === "admin") {
+      const fetchTickets = async () => {
+        try {
+          const response = await axios.get("https://minimern-backend.onrender.com/api/ticket", {
+            headers: { "x-auth-token": localStorage.getItem("token") },
+          });
+          setTickets(response.data);
+        } catch (error) {
+          console.error("Error fetching tickets:", error);
+        }
+      };
       fetchTickets();
     }
-  }, [user, token]);
+  }, [user]);
 
   // Update ticket status
   const updateStatus = async (id, status) => {
@@ -43,10 +40,10 @@ const Admin = () => {
       await axios.put(
         `https://minimern-backend.onrender.com/api/ticket/${id}`,
         { status },
-        { headers: { "x-auth-token": token } }
+        { headers: { "x-auth-token": localStorage.getItem("token") } }
       );
 
-      // Update only the modified ticket
+      // Update state immediately
       setTickets((prevTickets) =>
         prevTickets.map((ticket) =>
           ticket._id === id ? { ...ticket, status } : ticket
@@ -54,12 +51,11 @@ const Admin = () => {
       );
     } catch (error) {
       alert("Failed to update ticket status: " + (error.response?.data?.message || "Unknown error"));
-    } finally {
-      setLoadingTicketId(null);
     }
+    setLoadingTicketId(null);
   };
 
-  if (!user || user.role !== "admin") return null;
+  if (!user?.role || user.role !== "admin") return null;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
@@ -91,7 +87,7 @@ const Admin = () => {
                 value={ticket.status}
                 onChange={(e) => updateStatus(ticket._id, e.target.value)}
                 className="ml-2 border border-gray-300 rounded-md p-1"
-                disabled={loadingTicketId === ticket._id} // Disable only the updating ticket
+                disabled={loadingTicketId === ticket._id}
               >
                 <option value="Open">Open</option>
                 <option value="In Progress">In Progress</option>

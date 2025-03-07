@@ -13,11 +13,11 @@ const Login = () => {
     e.preventDefault(); 
     try {
       await login(email, password); 
-
+      console.log(user.role)
       if (user.role === "admin") {
-        navigate("/admin"); // Redirect admin users
+        navigate("/admin"); 
       } else {
-        navigate("/dashboard"); // Redirect regular users
+        navigate("/dashboard"); 
       } 
     } catch (error) {
       alert("Login failed. Please check your credentials.");
