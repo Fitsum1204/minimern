@@ -36,6 +36,7 @@ export const AuthContextProvider = ({ children }) => {
   
       // Decode the token immediately and update user state
       const decoded = jwtDecode(newToken);
+      console.log(decoded)
       setUser(decoded);
       
     } catch (error) {
