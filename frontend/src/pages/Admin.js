@@ -13,7 +13,8 @@ const Admin = () => {
   useEffect(() => {
     console.log("User object:", user);
     console.log("User role:", user.user?.role);
-    if (user?.user?.role !== "admin") {
+    if (!user) return;
+    if (user.user?.role !== "admin") {
       navigate("/dashboard");
     }
   }, [user, navigate]);

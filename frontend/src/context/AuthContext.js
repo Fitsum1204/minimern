@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser(decoded);
+        setUser(decoded.user);
       } catch (error) {
         console.error("Invalid token:", error);
         logout(); // Clear invalid token
