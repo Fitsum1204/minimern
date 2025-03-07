@@ -9,11 +9,20 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Handle form submission
+  /* const handleSubmit = async (e) => {
+    e.preventDefault(); 
+    try {
+      await login(email, password); 
+      navigate("/admin"); 
+    } catch (error) {
+      alert("Login failed. Please check your credentials.");
+    }
+  }; */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const user = await login(email, password); // Get user data from login function
-  
+      console.log(user)
       if (user.role === "admin") {
         navigate("/admin"); // Redirect admin users
       } else {
