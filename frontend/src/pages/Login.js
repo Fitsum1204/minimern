@@ -10,10 +10,15 @@ const Login = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
-      await login(email, password); 
-      navigate("/admin"); 
+      const user = await login(email, password); // Get user data from login function
+  
+      if (user.role === "admin") {
+        navigate("/admin"); // Redirect admin users
+      } else {
+        navigate("/dashboard"); // Redirect regular users
+      }
     } catch (error) {
       alert("Login failed. Please check your credentials.");
     }
