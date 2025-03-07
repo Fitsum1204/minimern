@@ -6,36 +6,36 @@ import AuthContext from "../context/AuthContext";
 const Admin = () => {
   const { user, logout } = useContext(AuthContext);
   const [tickets, setTickets] = useState([]);
-  const [loadingTicketId, setLoadingTicketId] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Redirect non-admins
   useEffect(() => {
-    if (!user?.role || user.role !== "admin") {
+    if (user && user.role !== "admin") {
       navigate("/dashboard");
     }
   }, [user, navigate]);
 
   // Fetch tickets
   useEffect(() => {
-    if (user?.role === "admin") {
-      const fetchTickets = async () => {
-        try {
-          const response = await axios.get("https://minimern-backend.onrender.com/api/ticket", {
-            headers: { "x-auth-token": localStorage.getItem("token") },
-          });
-          setTickets(response.data);
-        } catch (error) {
-          console.error("Error fetching tickets:", error);
-        }
-      };
+    const fetchTickets = async () => {
+      try {
+        const response = await axios.get("https://minimern-backend.onrender.com/api/ticket", {
+          headers: { "x-auth-token": localStorage.getItem("token") },
+        });
+        setTickets(response.data);
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+    if (user && user.role === "admin") {
       fetchTickets();
     }
   }, [user]);
 
   // Update ticket status
   const updateStatus = async (id, status) => {
-    setLoadingTicketId(id);
+    setLoading(true);
     try {
       await axios.put(
         `https://minimern-backend.onrender.com/api/ticket/${id}`,
@@ -52,10 +52,10 @@ const Admin = () => {
     } catch (error) {
       alert("Failed to update ticket status: " + (error.response?.data?.message || "Unknown error"));
     }
-    setLoadingTicketId(null);
+    setLoading(false);
   };
 
-  if (!user?.role || user.role !== "admin") return null;
+  //if (!user || user.role !== "admin") return null;
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
@@ -87,7 +87,7 @@ const Admin = () => {
                 value={ticket.status}
                 onChange={(e) => updateStatus(ticket._id, e.target.value)}
                 className="ml-2 border border-gray-300 rounded-md p-1"
-                disabled={loadingTicketId === ticket._id}
+                disabled={loading}
               >
                 <option value="Open">Open</option>
                 <option value="In Progress">In Progress</option>
@@ -96,7 +96,7 @@ const Admin = () => {
             </label>
 
             {/* Loading Indicator */}
-            {loadingTicketId === ticket._id && <p className="text-sm text-blue-500">Updating...</p>}
+            {loading && <p className="text-sm text-blue-500">Updating...</p>}
           </div>
         ))}
       </div>
