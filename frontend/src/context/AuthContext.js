@@ -1,47 +1,54 @@
-import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
-// Create context
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  // Load user from localStorage when app starts
+  // Check for existing token on mount and decode it
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get("https://minimern-backend.onrender.com/api/auth/me", {
-          headers: { "x-auth-token": token },
-        })
-        .then((res) => setUser(res.data))
-        .catch(() => localStorage.removeItem("token")); // Remove invalid token
+    const storedToken = localStorage.getItem("token");
+    if (storedToken && !token) {
+      setToken(storedToken); // Set token if it exists in localStorage
     }
-  }, []);
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+      } catch (error) {
+        console.error("Invalid token:", error);
+        logout(); // Clear invalid token
+      }
+    }
+  }, [token]);
 
   // Login function
   const login = async (email, password) => {
     try {
-      const res = await axios.post(
-        "https://minimern-backend.onrender.com/api/auth",
-        { email, password }
-      );
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user);
-      navigate("/dashboard");
+      const response = await axios.post("https://minimern-backend.onrender.com/api/auth/login", { email, password });
+  
+      const newToken = response.data.token;
+      localStorage.setItem("token", newToken);
+      setToken(newToken);
+  
+      // Decode the token immediately and update user state
+      const decoded = jwtDecode(newToken);
+      setUser(decoded);
+      
     } catch (error) {
-      alert("Login failed: " + (error.response?.data?.message || "Unknown error"));
+      console.error("Login error:", error.response?.data || error.message);
+      throw error;
     }
   };
-
+  
   // Logout function
   const logout = () => {
     localStorage.removeItem("token");
+    setToken(null);
     setUser(null);
-    navigate("/login");
   };
 
   return (
