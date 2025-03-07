@@ -15,22 +15,16 @@ const SignupPage = () => {
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json'
+            'Content-Type':'application/json'
         }
       };
-      await axios.post("https://minimern-backend.onrender.com/api/user/signup", { name, email, password, role }, config);
+      await axios.post("https://minimern-backend.onrender.com/api/user/signup", { name,email, password, role },config);
       alert("Signup successful! Please login.");
-  
-      if (role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/dashboard"); 
-      }
+      navigate("/login"); 
     } catch (error) {
       alert("Signup failed. Please check your details and try again.");
     }
   };
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 p-6">
