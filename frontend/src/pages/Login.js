@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 const Login = () => {
-  const { user,login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -13,17 +13,11 @@ const Login = () => {
     e.preventDefault(); 
     try {
       await login(email, password); 
-      console.log(user.role)
-      if (user.role === "admin") {
-        navigate("/admin"); 
-      } else {
-        navigate("/dashboard"); 
-      } 
+      navigate("/admin"); 
     } catch (error) {
       alert("Login failed. Please check your credentials.");
     }
   };
-  
   
 
   return (
