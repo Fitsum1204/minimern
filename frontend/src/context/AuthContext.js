@@ -28,21 +28,22 @@ export const AuthContextProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     try {
-        const config = {
-            headers: {
-               "x-auth-token": localStorage.getItem("token")
-            }
-          };
-      const response = await axios.post("https://minimern-backend.onrender.com/api/auth/login", { email, password },config);
+      const response = await axios.post("https://minimern-backend.onrender.com/api/auth/login", { email, password });
+  
       const newToken = response.data.token;
       localStorage.setItem("token", newToken);
       setToken(newToken);
+  
+      // Decode the token immediately and update user state
+      const decoded = jwtDecode(newToken);
+      setUser(decoded);
+      
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
-      throw error; 
+      throw error;
     }
   };
-
+  
   // Logout function
   const logout = () => {
     localStorage.removeItem("token");

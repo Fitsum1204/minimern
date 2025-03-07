@@ -12,13 +12,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     try {
+      await login(email, password); 
       navigate("/admin"); 
-      await login(email, password);
-     
     } catch (error) {
       alert("Login failed. Please check your credentials.");
     }
   };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 p-6">
