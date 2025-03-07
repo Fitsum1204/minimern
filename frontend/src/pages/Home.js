@@ -8,7 +8,7 @@ const Home = () => {
   };
 
   const handleSignup = () => {
-    navigate("/admin");
+    navigate("/signup");
   };
 
   return (

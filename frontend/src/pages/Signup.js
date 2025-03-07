@@ -20,7 +20,7 @@ const SignupPage = () => {
       };
       await axios.post("https://minimern-backend.onrender.com/api/user/signup", { name,email, password, role },config);
       alert("Signup successful! Please login.");
-      navigate("/login"); 
+      navigate("/admin"); 
     } catch (error) {
       alert("Signup failed. Please check your details and try again.");
     }
