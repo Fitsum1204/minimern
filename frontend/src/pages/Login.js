@@ -12,9 +12,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     try {
-      
-      await login(email, password);
       navigate("/admin"); 
+      await login(email, password);
+     
     } catch (error) {
       alert("Login failed. Please check your credentials.");
     }
