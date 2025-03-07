@@ -10,7 +10,7 @@ const Login = () => {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault(); /
+    e.preventDefault(); 
     try {
       
       await login(email, password);
